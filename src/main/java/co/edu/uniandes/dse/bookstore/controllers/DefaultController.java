@@ -17,7 +17,7 @@ public class DefaultController {
     public Map<String, String> welcome() {
         HashMap<String, String> map = new HashMap<>();
         map.put("status", "OK");
-        map.put("message", "REST API for BookStore is running");
+        map.put("message", "REST API for Clothing Store is running");
         return map;
     }
 }

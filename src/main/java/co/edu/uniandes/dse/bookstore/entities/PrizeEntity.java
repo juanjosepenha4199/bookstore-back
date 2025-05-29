@@ -50,7 +50,7 @@ public class PrizeEntity extends BaseEntity {
 
 	@PodamExclude
 	@ManyToOne
-	private AuthorEntity author;
+	private DesignerEntity designer;
 
 	private String name;
 	private String description;

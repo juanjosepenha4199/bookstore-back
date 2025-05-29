@@ -24,37 +24,49 @@ SOFTWARE.
 
 package co.edu.uniandes.dse.bookstore.entities;
 
-import lombok.Data;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
+import lombok.Data;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
- * Clase que representa una reseña en la persistencia
+ * Clase que representa un libro en la persistencia
  *
  * @author ISIS2603
  */
 
-@Entity
 @Data
-public class ReviewEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Entity
+public class ClothingEntity extends BaseEntity {
 
-    private Integer rating;
-    private String comment;
+	private String name;
+	private String sku;
+	private String image;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private ProductEntity product;
+	@Temporal(TemporalType.DATE)
+	private Date releaseDate;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+	private String description;
+
+	@PodamExclude
+	@ManyToOne
+	private BrandEntity brand;
+
+	@PodamExclude
+	@OneToMany(mappedBy = "clothing", cascade = CascadeType.PERSIST, orphanRemoval = true)
+	private List<ReviewEntity> reviews = new ArrayList<>();
+
+	@PodamExclude
+	@ManyToMany
+	private List<DesignerEntity> designers = new ArrayList<>();
 }

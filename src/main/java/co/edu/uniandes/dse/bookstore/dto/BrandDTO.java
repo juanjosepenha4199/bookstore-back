@@ -21,40 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-
-package co.edu.uniandes.dse.bookstore.entities;
+package co.edu.uniandes.dse.bookstore.dto;
 
 import lombok.Data;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
-
-/**
- * Clase que representa una reseña en la persistencia
- *
- * @author ISIS2603
- */
-
-@Entity
 @Data
-public class ReviewEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private Integer rating;
-    private String comment;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private ProductEntity product;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+public class BrandDTO {
+	private Long id;
+	private String name;
 }

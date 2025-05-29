@@ -24,37 +24,45 @@ SOFTWARE.
 
 package co.edu.uniandes.dse.bookstore.entities;
 
-import lombok.Data;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
+import co.edu.uniandes.dse.bookstore.podam.DateStrategy;
+import lombok.Data;
+import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
- * Clase que representa una reseña en la persistencia
+ * Clase que representa un diseñador en la persistencia
  *
  * @author ISIS2603
  */
 
-@Entity
 @Data
-public class ReviewEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Entity
+public class DesignerEntity extends BaseEntity {
 
-    private Integer rating;
-    private String comment;
+	@Temporal(TemporalType.DATE)
+	@PodamStrategyValue(DateStrategy.class)
+	private Date birthDate;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private ProductEntity product;
+	@PodamExclude
+	@ManyToMany(mappedBy = "designers")
+	private List<ClothingEntity> clothingItems = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+	@PodamExclude
+	@OneToMany(mappedBy = "designer", fetch = FetchType.LAZY)
+	private List<PrizeEntity> prizes = new ArrayList<>();
+
+	private String name;
+	private String description;
+	private String image;
 }

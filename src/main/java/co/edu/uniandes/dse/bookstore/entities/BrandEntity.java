@@ -24,37 +24,28 @@ SOFTWARE.
 
 package co.edu.uniandes.dse.bookstore.entities;
 
-import lombok.Data;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
+import lombok.Data;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
- * Clase que representa una reseña en la persistencia
+ * Clase que representa una editorial en la persistencia
  *
  * @author ISIS2603
  */
 
-@Entity
 @Data
-public class ReviewEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Entity
+public class BrandEntity extends BaseEntity {
 
-    private Integer rating;
-    private String comment;
+	private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private ProductEntity product;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+	@PodamExclude
+	@OneToMany(mappedBy = "brand")
+	private List<ClothingEntity> clothingItems = new ArrayList<>();
 }

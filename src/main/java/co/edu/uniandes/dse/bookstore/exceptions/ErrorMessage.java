@@ -24,13 +24,13 @@ SOFTWARE.
 package co.edu.uniandes.dse.bookstore.exceptions;
 
 public final class ErrorMessage {
-	public static final String BOOK_NOT_FOUND = "The book with the given id was not found";
+	public static final String CLOTHING_NOT_FOUND = "The clothing item with the given id was not found";
 	public static final String REVIEW_NOT_FOUND = "The review with the given id was not found";
-	public static final String EDITORIAL_NOT_FOUND = "The editorial with the given id was not found";
+	public static final String BRAND_NOT_FOUND = "The brand with the given id was not found";
 	public static final String PRIZE_NOT_FOUND = "The prize with the given id was not found";
-	public static final String AUTHOR_NOT_FOUND = "The author with the given id was not found";
+	public static final String DESIGNER_NOT_FOUND = "The designer with the given id was not found";
 	public static final String ORGANIZATION_NOT_FOUND = "The organization with the given id was not found";
-	public static final String REVIEW_NOT_ASSOCIATED_TO_BOOK = "The review is not associated to the book";
+	public static final String REVIEW_NOT_ASSOCIATED_TO_CLOTHING = "The review is not associated to the clothing item";
 
 	private ErrorMessage() {
 		throw new IllegalStateException("Utility class");

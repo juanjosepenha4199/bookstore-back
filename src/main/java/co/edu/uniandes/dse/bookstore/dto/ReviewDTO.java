@@ -28,8 +28,8 @@ import lombok.Data;
 @Data
 public class ReviewDTO {
     private Long id;
-    private String name;
-    private String source;
-    private String description;
-    private BookDTO book;
+    private Integer rating;
+    private String comment;
+    private ProductDTO product;
+    private UserDTO user;
 }

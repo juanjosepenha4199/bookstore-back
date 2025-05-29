@@ -37,5 +37,5 @@ import co.edu.uniandes.dse.bookstore.entities.ReviewEntity;
  */
 @Repository
 public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
-	ReviewEntity findByBookIdAndId(Long bookId, Long id);
+	ReviewEntity findByClothingIdAndId(Long clothingId, Long id);
 }

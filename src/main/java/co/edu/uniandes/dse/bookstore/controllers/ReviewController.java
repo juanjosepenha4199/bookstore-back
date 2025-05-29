@@ -52,7 +52,7 @@ import co.edu.uniandes.dse.bookstore.services.ReviewService;
  * @version 1.0
  */
 @RestController
-@RequestMapping("/books")
+@RequestMapping("/clothing")
 public class ReviewController {
 
 	@Autowired
@@ -66,81 +66,80 @@ public class ReviewController {
 	 * petición y se regresa un objeto identico con un id auto-generado por la base
 	 * de datos.
 	 *
-	 * @param bookId El ID del libro del cual se le agrega la reseña
+	 * @param clothingId El ID de la prenda de la cual se le agrega la reseña
 	 * @param review {@link ReviewDTO} - La reseña que se desea guardar.
 	 * @return JSON {@link ReviewDTO} - La reseña guardada con el atributo id
 	 *         autogenerado.
 	 */
-	@PostMapping(value = "/{bookId}/reviews")
+	@PostMapping(value = "/{clothingId}/reviews")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ReviewDTO createReview(@PathVariable Long bookId, @RequestBody ReviewDTO review)
+	public ReviewDTO createReview(@PathVariable Long clothingId, @RequestBody ReviewDTO review)
 			throws EntityNotFoundException {
 		ReviewEntity reviewEnity = modelMapper.map(review, ReviewEntity.class);
-		ReviewEntity newReview = reviewService.createReview(bookId, reviewEnity);
+		ReviewEntity newReview = reviewService.createReview(clothingId, reviewEnity);
 		return modelMapper.map(newReview, ReviewDTO.class);
 	}
 
 	/**
-	 * Busca y devuelve todas las reseñas que existen en un libro.
+	 * Busca y devuelve todas las reseñas que existen en una prenda.
 	 *
-	 * @param bookId El ID del libro del cual se buscan las reseñas
-	 * @return JSONArray {@link ReviewDTO} - Las reseñas encontradas en el libro. Si
+	 * @param clothingId El ID de la prenda de la cual se buscan las reseñas
+	 * @return JSONArray {@link ReviewDTO} - Las reseñas encontradas en la prenda. Si
 	 *         no hay ninguna retorna una lista vacía.
 	 */
-	@GetMapping(value = "/{bookId}/reviews")
+	@GetMapping(value = "/{clothingId}/reviews")
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<ReviewDTO> getReviews(@PathVariable Long bookId) throws EntityNotFoundException {
-		List<ReviewEntity> reviews = reviewService.getReviews(bookId);
+	public List<ReviewDTO> getReviews(@PathVariable Long clothingId) throws EntityNotFoundException {
+		List<ReviewEntity> reviews = reviewService.getReviews(clothingId);
 		return modelMapper.map(reviews, new TypeToken<List<ReviewDTO>>() {
 		}.getType());
 	}
 
 	/**
-	 * Busca y devuelve la reseña con el ID recibido en la URL, relativa a un libro.
+	 * Busca y devuelve la reseña con el ID recibido en la URL, relativa a una prenda.
 	 *
-	 * @param bookId   El ID del libro del cual se buscan las reseñas
+	 * @param clothingId El ID de la prenda de la cual se busca la reseña
 	 * @param reviewId El ID de la reseña que se busca
-	 * @return {@link ReviewDTO} - La reseña encontradas en el libro.
+	 * @return {@link ReviewDTO} - La reseña encontrada en la prenda.
 	 */
-	@GetMapping(value = "/{bookId}/reviews/{reviewId}")
+	@GetMapping(value = "/{clothingId}/reviews/{reviewId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ReviewDTO getReview(@PathVariable Long bookId, @PathVariable Long reviewId)
-			throws EntityNotFoundException {
-		ReviewEntity entity = reviewService.getReview(bookId, reviewId);
-		return modelMapper.map(entity, ReviewDTO.class);
+	public ReviewDTO getReview(@PathVariable Long clothingId, @PathVariable Long reviewId)
+			throws EntityNotFoundException, IllegalOperationException {
+		ReviewEntity reviewEntity = reviewService.getReview(clothingId, reviewId);
+		return modelMapper.map(reviewEntity, ReviewDTO.class);
 	}
 
 	/**
-	 * Actualiza una reseña con la informacion que se recibe en el cuerpo de la
-	 * petición y se regresa el objeto actualizado.
+	 * Actualiza la reseña con el ID recibido en la URL con la información que se
+	 * recibe en el cuerpo de la petición.
 	 *
-	 * @param bookId   El ID del libro del cual se guarda la reseña
-	 * @param reviewId El ID de la reseña que se va a actualizar
-	 * @param review   {@link ReviewDTO} - La reseña que se desea guardar.
+	 * @param clothingId El ID de la prenda de la cual se actualiza la reseña
+	 * @param reviewId El ID de la reseña que se desea actualizar
+	 * @param review {@link ReviewDTO} - La reseña que se desea guardar.
 	 * @return JSON {@link ReviewDTO} - La reseña actualizada.
 	 */
-	@PutMapping(value = "/{bookId}/reviews/{reviewsId}")
+	@PutMapping(value = "/{clothingId}/reviews/{reviewId}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ReviewDTO updateReview(@PathVariable Long bookId, @PathVariable("reviewsId") Long reviewId,
-			@RequestBody ReviewDTO review) throws EntityNotFoundException {
+	public ReviewDTO updateReview(@PathVariable Long clothingId, @PathVariable Long reviewId,
+			@RequestBody ReviewDTO review) throws EntityNotFoundException, IllegalOperationException {
 		ReviewEntity reviewEntity = modelMapper.map(review, ReviewEntity.class);
-		ReviewEntity newEntity = reviewService.updateReview(bookId, reviewId, reviewEntity);
-		return modelMapper.map(newEntity, ReviewDTO.class);
+		ReviewEntity updatedReview = reviewService.updateReview(clothingId, reviewId, reviewEntity);
+		return modelMapper.map(updatedReview, ReviewDTO.class);
 	}
 
 	/**
-     * Borra la reseña con el id asociado recibido en la URL.
-     *
-     * @param bookId El ID del libro del cual se va a eliminar la reseña.
-     * @param reviewId El ID de la reseña que se va a eliminar.
+	 * Borra la reseña con el id asociado recibido en la URL.
+	 *
+	 * @param clothingId El ID de la prenda de la cual se va a eliminar la reseña.
+	 * @param reviewId El ID de la reseña que se va a eliminar.
 	 * @throws IllegalOperationException 
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-     */
-	@DeleteMapping(value = "/{bookId}/reviews/{reviewId}")
+	 * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+	 */
+	@DeleteMapping(value = "/{clothingId}/reviews/{reviewId}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	public void deleteReview(@PathVariable Long bookId, @PathVariable Long reviewId)
+	public void deleteReview(@PathVariable Long clothingId, @PathVariable Long reviewId)
 			throws EntityNotFoundException, IllegalOperationException {
-		reviewService.deleteReview(bookId, reviewId);
+		reviewService.deleteReview(clothingId, reviewId);
 	}
-
 }

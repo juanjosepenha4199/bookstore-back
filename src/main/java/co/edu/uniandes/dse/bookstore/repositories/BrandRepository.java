@@ -22,39 +22,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package co.edu.uniandes.dse.bookstore.entities;
+package co.edu.uniandes.dse.bookstore.repositories;
 
-import lombok.Data;
+import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+import co.edu.uniandes.dse.bookstore.entities.BrandEntity;
 
 /**
- * Clase que representa una reseña en la persistencia
+ * Interface that persists an editorial
  *
  * @author ISIS2603
+ *
  */
-
-@Entity
-@Data
-public class ReviewEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private Integer rating;
-    private String comment;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private ProductEntity product;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+@Repository
+public interface BrandRepository extends JpaRepository<BrandEntity, Long> {
+	List<BrandEntity> findByName(String name);
 }
